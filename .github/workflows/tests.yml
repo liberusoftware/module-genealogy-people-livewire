@@ -24,4 +24,4 @@ jobs:
           php-version: '8.5'
           extensions: mbstring, pdo, pdo_sqlite, sqlite3, dom, curl, intl
       - run: composer install --no-interaction --prefer-dist --optimize-autoloader
-      - run: vendor/bin/pest
+      - run: vendor/bin/pest --coverage --min=100
