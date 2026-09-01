@@ -11,6 +11,13 @@ final class PersonSearch extends Component
 {
     public string $query = '';
 
+    public bool $includeDeceased = true;
+
+    public function mount(): void
+    {
+        abort_unless(auth()->check(), 403);
+    }
+
     public function render(): mixed
     {
         return view('genealogy-people-livewire::person-search', [
@@ -26,6 +33,7 @@ final class PersonSearch extends Component
                             ->orWhere('display_name', 'like', $this->query.'%');
                     });
                 })
+                ->when(! $this->includeDeceased, fn ($builder) => $builder->living())
                 ->orderBy('family_name')
                 ->limit(25)
                 ->get(),
